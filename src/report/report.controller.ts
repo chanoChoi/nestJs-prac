@@ -14,18 +14,20 @@ import { User } from 'src/user/user.entitiy';
 import { Serialize } from 'src/interceptor/serialize.interceptor';
 import { ReportDto } from './dtos/report.dto';
 import { ApproveReportDto } from './dtos/approve-report.dto';
+import { AdminGuard } from 'src/guard/admin.guard';
 
 @Controller('reports')
 export class ReportController {
   constructor(private readonly reportService: ReportService) {}
 
-  @Serialize(ReportDto)
   @UseGuards(AuthGuard)
+  @Serialize(ReportDto)
   @Post()
   createReport(@Body() body: CreateReportDto, @CurrentUser() user: User) {
     return this.reportService.create(body, user);
   }
 
+  @UseGuards(AdminGuard)
   @Patch('/:id')
   approveReport(@Param('id') id: string, @Body() body: ApproveReportDto) {
     return this.reportService.changeApproval(parseInt(id), body.approved);
