@@ -19,3 +19,6 @@ Content-Type: application/json
 {
   "approved": true
 }
+
+###
+GET  http://localhost:3000/reports?make=make&model=model&year=2023&lng=1&lat=1&mileage=1000
