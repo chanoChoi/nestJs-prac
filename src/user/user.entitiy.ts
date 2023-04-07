@@ -5,7 +5,9 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
+import { Report } from 'src/report/report.entity';
 
 @Entity()
 export class User {
@@ -17,6 +19,10 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Report, (report) => report.user) // @OneToMay = Dose not change TABLE
+  reports: Report[]; // reports tied to this user will be accessed with : user.reports
+  // Association is not automatically fetched when we fetch a User
 
   @AfterInsert()
   logInsert() {

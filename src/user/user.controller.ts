@@ -61,6 +61,7 @@ export class UserController {
   @Post('/signout')
   signout(@Session() session: any) {
     session.userId = null;
+    console.log(session.userId);
   }
 
   @Serialize(FunDto)
